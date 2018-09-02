@@ -1,5 +1,7 @@
 from src.models.Nodes import *
 from graphviz import Digraph
+import pydot
+
 
 class Tree:
     NODES = {
@@ -11,17 +13,16 @@ class Tree:
     }
 
     def __init__(self, expression):
+        self.id = str(id(self))
         self.expression = self._remove_expression_whitespaces(expression)
         self.root = self._parse_expression(self.expression)
 
-    # just to test for now
-    def get_expression(self):
+    def get_infix_expression(self):
         print(self.root)
 
-    def get_dot(self):
-        dot = Digraph(comment='Parse tree')
-        self.root.insert_in_dot(dot)
-        dot.render(f'../static/images/{str(id(self))}.gv', view=False)
+    def get_graph_image_name(self):
+        self._create_graph_image()
+        return f'{self.id}.png'
 
     def _remove_expression_whitespaces(self, expression):
         return ''.join(expression.split(' '))
@@ -50,15 +51,15 @@ class Tree:
             if bracket_count == 1 and char == ',': return i
         raise BinaryOperatorException('Invalid expression')
 
+    def _create_graph_image(self):
+        self._get_dot()
+        self._convert_dot_to_image()
 
-# just for testing
-def run():
-    t = Tree('   =( >  (~( z ),     x ), ~ (  y   )   )')
-    t.get_expression()
-    t.get_dot()
+    def _get_dot(self):
+        dot = Digraph(comment='Parse tree')
+        self.root.insert_in_dot(dot)
+        dot.save(f'src/static/images/{self.id}.gv')
 
-if __name__ == '__main__':
-    try:
-        run()
-    except Exception as e:
-        print(e)
+    def _convert_dot_to_image(self):
+        (graph, ) = pydot.graph_from_dot_file(f'src/static/images/{self.id}.gv')
+        graph.write_png(f'src/static/images/{self.id}.png')
