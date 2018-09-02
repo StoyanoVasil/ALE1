@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
+graphviz = "*"
 
 [dev-packages]
 

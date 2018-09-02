@@ -1,5 +1,6 @@
 from src.models.Errors import *
 
+
 class Node:
     def __init__(self):
         pass
@@ -14,10 +15,13 @@ class Predicate(Node):
         if len(label) == 1:
             self.label = label
         else:
-            raise NotAProperPredicateException("One of your predicates is either missing or more than 1 letter")
+            raise NotAProperPredicateException("Invalid expression")
 
     def __repr__(self):
         return self.label
+
+    def insert_in_dot(self, dot):
+        dot.node(str(id(self)), self.label)
 
 
 class UnaryOperator(Node):
@@ -27,10 +31,22 @@ class UnaryOperator(Node):
         self.child = child
 
     def __repr__(self):
-        return f'{self.label}({self.child})'
+        return f'¬({self.child})'
+
+    def insert_in_dot(self, dot):
+        self.child.insert_in_dot(dot)
+        dot.node(str(id(self)), self.label)
+        dot.edge(str(id(self)), str(id(self.child)))
 
 
 class BinaryOperator(Node):
+    OPERATORS = {
+        '>': '⇒',
+        '=': '⇔',
+        '&': '⋀',
+        '|': '⋁'
+    }
+
     def __init__(self, label, left_child, right_child):
         super().__init__()
         self.label = label
@@ -38,4 +54,11 @@ class BinaryOperator(Node):
         self.right_child = right_child
 
     def __repr__(self):
-        return f'{self.label}({self.left_child},{self.right_child})'
+        return f'({self.left_child}{self.OPERATORS[self.label]}{self.right_child})'
+
+    def insert_in_dot(self, dot):
+        self.left_child.insert_in_dot(dot)
+        self.right_child.insert_in_dot(dot)
+        dot.node(str(id(self)), self.label)
+        dot.edge(str(id(self)), str(id(self.left_child)))
+        dot.edge(str(id(self)), str(id(self.right_child)))
