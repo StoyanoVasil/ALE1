@@ -128,18 +128,3 @@ def _get_binary_operator_comma_index(expression):
             coma_count += 1
     if coma_count > 1: raise PredicateError('Operators take not more than two predicates, check your comas')
     return index
-
-
-if __name__ == '__main__':
-    print('Enter expression: ')
-    x = input()
-    while x != 'q':
-        try:
-            _validate_expression(x)
-            # _validate_operators(x)
-            print('Expression is ok \nEnter expression: ')
-            x = input()
-        except Exception as e:
-            print(e)
-            print('Enter expression: ')
-            x = input()
