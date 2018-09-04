@@ -1,12 +1,19 @@
-class NotAProperPredicateException(Exception):
+class ParserError(Exception):
     def __init__(self, message):
+        super().__init__()
         self.message = message
 
 
-class BinaryOperatorException(Exception):
+class BracketError(ParserError):
     def __init__(self, message):
-        self.message = message
+        super().__init__(message)
 
-class OperatorException(Exception):
+
+class OperatorError(ParserError):
     def __init__(self, message):
-        self.message = message
+        super().__init__(message)
+
+
+class PredicateError(ParserError):
+    def __init__(self, message):
+        super().__init__(message)
