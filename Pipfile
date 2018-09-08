@@ -7,6 +7,7 @@ name = "pypi"
 flask = "*"
 graphviz = "*"
 pydot = "*"
+numpy = "*"
 
 [dev-packages]
 

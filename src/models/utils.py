@@ -61,9 +61,14 @@ def _expression_is_single_predicate(expression):
         else: raise PredicateError('Not a proper predicate')
 
 def _is_proper_predicate(char):
-    if char.isalpha() or char in ['0', '1']:
+    if _predicate_is_capital_letter(char) or char in ['0', '1']:
         return True
     return False
+
+def _predicate_is_capital_letter(char):
+    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    if char in letters: return True
+    raise PredicateError('Predicates must be a capital letter, 0 or 1')
 
 def _operators_are_followed_by_bracket(expression):
     try:
