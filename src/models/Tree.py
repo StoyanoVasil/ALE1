@@ -10,7 +10,7 @@ class Tree:
         self._set_unique_predicates()
 
     def get_infix_expression(self):
-        return self.root
+        return str(self.root)
 
     def get_graph_image_name(self):
         self._create_graph_image()

@@ -1,4 +1,5 @@
 import numpy as np
+import json
 from src.models.Tree import Tree
 
 
@@ -15,6 +16,8 @@ class TruthTable:
 
     def _create_table(self):
         self.table = np.array([arr for arr in self._table_row_generator()])
+        self._set_identification()
+        self._add_predicates_to_table()
 
     def _table_row_generator(self):
         for r in range(self.rows):
@@ -30,3 +33,12 @@ class TruthTable:
         for i, v in enumerate(self.tree.unique_predicates):
             dict[v] = values[i]
         return dict
+
+    def _set_identification(self):
+        binary = ''.join(reversed([str(i[self.columns-1]) for i in self.table]))
+        self.identification = hex(int(binary, 2))[2:]
+
+    def _add_predicates_to_table(self):
+        predicates = [x for x in self.tree.unique_predicates]
+        predicates.append(self.tree.get_infix_expression())
+        self.table = np.vstack((np.array(predicates), self.table))

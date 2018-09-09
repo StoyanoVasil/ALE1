@@ -20,7 +20,7 @@ class Predicate(Node):
         self.id = str(id(self))
         self.label = label
 
-    def __repr__(self):
+    def __str__(self):
         return self.label
 
     def insert_in_dot(self, dot):
@@ -43,7 +43,7 @@ class UnaryOperator(Node):
         self.label = label
         self.child = child
 
-    def __repr__(self):
+    def __str__(self):
         return f'¬({self.child})'
 
     def insert_in_dot(self, dot):
@@ -66,7 +66,7 @@ class BinaryOperator(Node):
         self.right_child = right_child
         self.infix = infix
 
-    def __repr__(self):
+    def __str__(self):
         return f'({self.left_child}{self.infix}{self.right_child})'
 
     def insert_in_dot(self, dot):
