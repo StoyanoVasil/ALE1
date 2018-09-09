@@ -3,10 +3,6 @@ html, body {
     height: 100%;
 }
 
-.container-fluid {
-    margin-top: 1%;
-}
-
 .jumbotron {
     display: flex;
     flex-direction: column;
@@ -20,4 +16,8 @@ html, body {
 
 #graph-image {
     display: none;
+}
+
+.top-space {
+    margin-top: 1%;
 }
