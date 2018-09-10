@@ -35,7 +35,7 @@ class TruthTable:
         return dict
 
     def __set_identification(self):
-        binary = ''.join(reversed([str(i[self.columns-1]) for i in self.table]))
+        binary = ''.join(reversed([str(i[-1]) for i in self.table]))
         self.identification = hex(int(binary, 2))[2:]
 
     def __add_predicates_to_table(self):

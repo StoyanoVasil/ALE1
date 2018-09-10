@@ -89,7 +89,7 @@ class AndOperator(BinaryOperator):
         super().__init__(label, left_child, right_child, '⋀')
 
     def evaluate(self, dict):
-        return self.right_child.evaluate(dict) and self.left_child.evaluate(dict)
+        return self.left_child.evaluate(dict) and self.right_child.evaluate(dict)
 
 
 class OrOperator(BinaryOperator):
@@ -97,7 +97,7 @@ class OrOperator(BinaryOperator):
         super().__init__(label, left_child, right_child, '⋁')
 
     def evaluate(self, dict):
-        return self.right_child.evaluate(dict) or self.left_child.evaluate(dict)
+        return self.left_child.evaluate(dict) or self.right_child.evaluate(dict)
 
 
 class ImplicationOperator(BinaryOperator):
@@ -105,7 +105,7 @@ class ImplicationOperator(BinaryOperator):
         super().__init__(label, left_child, right_child, '⇒')
 
     def evaluate(self, dict):
-        return not(self.right_child.evaluate(dict)) or self.left_child.evaluate(dict)
+        return not(self.left_child.evaluate(dict)) or self.right_child.evaluate(dict)
 
 
 class BiImplicationOperator(BinaryOperator):
@@ -113,4 +113,4 @@ class BiImplicationOperator(BinaryOperator):
         super().__init__(label, left_child, right_child, '⇔')
 
     def evaluate(self, dict):
-        return self.right_child.evaluate(dict) == self.left_child.evaluate(dict)
+        return self.left_child.evaluate(dict) == self.right_child.evaluate(dict)
