@@ -21,3 +21,13 @@ html, body {
 .top-space {
     margin-top: 1%;
 }
+
+td {
+    width: auto;
+}
+
+p {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+}
