@@ -10,11 +10,22 @@ class TruthTable:
         self.__create_table()
 
     def __set_rows_and_columns(self):
-        predicates = len(self.tree.unique_predicates)
-        self.rows = 2**predicates
-        self.columns = predicates + 1
+        #TODO: fix no predicate error
+        self.predicates = len(self.tree.unique_predicates)
+        self.rows = 2**self.predicates
+        self.columns = self.predicates + 1
 
     def __create_table(self):
+        if self.predicates == 0:
+            self.__create_table_no_predicates()
+        else:
+            self.__create_table_predicates()
+
+    def __create_table_no_predicates(self):
+        self.identification = self.tree.evaluate({})
+        self.table = np.array([[self.tree.get_infix_expression()], [self.identification]])
+
+    def __create_table_predicates(self):
         self.table = np.array([arr for arr in self.__table_row_generator()])
         self.__set_identification()
         self.__add_predicates_to_table()
