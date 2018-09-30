@@ -1,16 +1,17 @@
 import numpy as np
-import json
 from src.models.Tree import Tree
+from src.models.Simplifier import Simplifier
 
 
 class TruthTable:
     def __init__(self, expression):
         self.tree = Tree(expression)
+        self.simplifier = Simplifier()
         self.__set_rows_and_columns()
         self.__create_table()
+        self.simplifier.simplify()
 
     def __set_rows_and_columns(self):
-        #TODO: fix no predicate error
         self.predicates = len(self.tree.unique_predicates)
         self.rows = 2**self.predicates
         self.columns = self.predicates + 1
@@ -32,11 +33,13 @@ class TruthTable:
 
     def __table_row_generator(self):
         for r in range(self.rows):
-            yield self.__get_row(bin(r)[2:].zfill(self.columns - 1))
+            yield self.__get_row(str(r + 1), bin(r)[2:].zfill(self.columns - 1))
 
-    def __get_row(self, values):
+    def __get_row(self, i, values):
         values_array = [int(i) for i in values]
-        values_array.append(self.tree.evaluate(self.__create_dict(values_array)))
+        evaluation = self.tree.evaluate(self.__create_dict(values_array))
+        if evaluation == 1: self.simplifier.add_implicant(i, values_array)
+        values_array.append(evaluation)
         return values_array
 
     def __create_dict(self, values):
@@ -53,3 +56,8 @@ class TruthTable:
         predicates = [x for x in self.tree.unique_predicates]
         predicates.append(self.tree.get_infix_expression())
         self.table = np.vstack((np.array(predicates), self.table))
+
+
+if __name__ == '__main__':
+    t = TruthTable('|(A,|(B,C))')
+    # print(t.simplifier.midterms)
