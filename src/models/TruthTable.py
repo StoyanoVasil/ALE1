@@ -8,8 +8,10 @@ class TruthTable:
         self.tree = Tree(expression)
         self.simplifier = Simplifier()
         self.__set_rows_and_columns()
+        self.normalization = []
         self.__create_table()
         self.simplifier.simplify()
+        self.__normalize()
 
     def __set_rows_and_columns(self):
         self.predicates = len(self.tree.unique_predicates)
@@ -38,7 +40,9 @@ class TruthTable:
     def __get_row(self, i, values):
         values_array = [int(i) for i in values]
         evaluation = self.tree.evaluate(self.__create_dict(values_array))
-        if evaluation == 1: self.simplifier.add_implicant(i, values_array)
+        if evaluation == 1:
+            self.__add_to_normalization(values_array)
+            self.simplifier.add_implicant(i, values_array)
         values_array.append(evaluation)
         return values_array
 
@@ -57,7 +61,19 @@ class TruthTable:
         predicates.append(self.tree.get_infix_expression())
         self.table = np.vstack((np.array(predicates), self.table))
 
+    def __add_to_normalization(self, values):
+        dict = self.__create_dict(values)
+        predicates = []
+        for k, v in dict.items():
+            if v == 1: predicates.append(f'{k}')
+            else: predicates.append(f'¬{k}')
+        norm = ' ⋀ '.join(predicates)
+        self.normalization.append(f'({norm})')
+
+    def __normalize(self):
+        self.normalization = ' ⋁ '.join(self.normalization)
+
 
 if __name__ == '__main__':
     t = TruthTable('|(A,|(B,C))')
-    # print(t.simplifier.midterms)
+    print(t.normalization)
