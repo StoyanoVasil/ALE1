@@ -6,17 +6,17 @@ from src.models.Simplifier import Simplifier
 class TruthTable:
     def __init__(self, expression):
         self.tree = Tree(expression)
-        self.simplifier = Simplifier()
         self.__set_rows_and_columns()
+        self.simplifier = Simplifier(self.predicates)
         self.normalization = []
         self.__create_table()
         self.simplifier.simplify()
         self.__normalize()
 
     def __set_rows_and_columns(self):
-        self.predicates = len(self.tree.unique_predicates)
-        self.rows = 2**self.predicates
-        self.columns = self.predicates + 1
+        self.predicates = self.tree.unique_predicates
+        self.rows = 2**len(self.predicates)
+        self.columns = len(self.predicates) + 1
 
     def __create_table(self):
         if self.predicates == 0:
@@ -35,7 +35,7 @@ class TruthTable:
 
     def __table_row_generator(self):
         for r in range(self.rows):
-            yield self.__get_row(str(r + 1), bin(r)[2:].zfill(self.columns - 1))
+            yield self.__get_row(str(r), bin(r)[2:].zfill(self.columns - 1))
 
     def __get_row(self, i, values):
         values_array = [int(i) for i in values]
@@ -75,5 +75,5 @@ class TruthTable:
 
 
 if __name__ == '__main__':
-    t = TruthTable('|(A,|(B,C))')
-    print(t.normalization)
+    t = TruthTable('~(&(A,=(B,>(C,D))))')
+    print(t.simplifier.normalization)

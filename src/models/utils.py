@@ -21,9 +21,14 @@ def _remove_expression_whitespaces(expression):
     return exp
 
 def _validate_expression(expression):
+    _validate_length(expression)
     _validate_brackets(expression)
     _validate_operators(expression)
     _validate_predicate(expression)
+
+def _validate_length(expression):
+    if len(expression) < 1:
+        raise ParserError('Please enter an expression')
 
 def _validate_brackets(expression):
     _validate_matching_brackets(expression)
