@@ -1,6 +1,7 @@
 
 class Simplifier:
     def __init__(self, predicates):
+        self.keys = set()
         self.predicates = predicates
         self.minterm = []
         self.implicants = {}
@@ -50,17 +51,31 @@ class Simplifier:
     def __step(self):
         groups = sorted([k for k in self.implicants.keys()])
         for i, k in enumerate(groups[:-1]):
-            self.__match_group(self.implicants[k], self.implicants[groups[i + 1]])
+            if int(groups[i + 1]) - int(k) == 1:
+                self.__match_group(self.implicants[k], self.implicants[groups[i + 1]])
         self.__add_reduced_implicants()
 
     def __match_group(self, a, b):
         for arr_a in a:
             for arr_b in b:
+                if self.__key_exists(arr_a, arr_b):
+                    self.__check_implicants(arr_a, arr_b)
+                    continue
                 self.__match_implicants(arr_a, arr_b)
+
+    def __key_exists(self, a, b):
+        key = self.__generate_sorted_key(a, b)
+        if key in self.keys: return True
+        self.keys.add(key)
+        return False
+
+    def __generate_sorted_key(self, a, b):
+        return ''.join([str(i) for i in sorted([int(i) for i in a[0].split('-')] + [int(i) for i in b[0].split('-')])])
 
     def __match_implicants(self, a, b):
         index = self.__different_char_index(a[1], b[1])
         if index != -1:
+            self.keys.add(self.__generate_sorted_key(a, b))
             self.__add_to_step(index, a, b)
             self.__check_implicants(a, b)
 
@@ -176,5 +191,5 @@ if __name__ == '__main__':
     for k, v in arr.items():
         s.add_implicant(k, v)
     s.simplify()
-    print(s.reduced_implicants)
     print(s.final_implicants)
+    print(s.normalization)

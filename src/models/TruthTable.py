@@ -75,5 +75,6 @@ class TruthTable:
 
 
 if __name__ == '__main__':
-    t = TruthTable('~(&(A,=(B,>(C,D))))')
-    print(t.simplifier.normalization)
+    # t = TruthTable('&(A,|(C,B))')
+    t = TruthTable('&(|(A,B),>(C,~(&(|(D,E),|(F,G)))))')
+    print(t.simplifier.final_implicants)
