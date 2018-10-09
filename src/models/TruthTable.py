@@ -85,8 +85,9 @@ class TruthTable:
 
 
 if __name__ == '__main__':
-    # t = TruthTable('&(A,|(C,B))')
-    t = TruthTable('=(=(A,B),=(C,D))')
+    t = TruthTable('>(|(~(A),~(&(J,B))),=(C,|(D,F)))')
     t1 = TruthTable(str(t.tree.nandify()))
     print(t.identification)
+    print(t.tree.get_infix_expression())
     print(t1.identification)
+    print(t1.tree.get_infix_expression())

@@ -24,7 +24,10 @@ truth_table_request.onreadystatechange = function() {
             img_container.src = "../static/images/" + json["image"];
             rendered_truth_table.open("POST", "/render_table", true);
             rendered_truth_table.setRequestHeader("Content-Type", "application/json");
-            rendered_truth_table.send(JSON.stringify({"table": json["table"], "identification": json["identification"]}));
+            rendered_truth_table.send(JSON.stringify({
+                "table": json["table"],
+                "identification": json["identification"],
+                "normalization": json["normalization"]}));
         }
     }
 };
