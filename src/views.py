@@ -15,7 +15,7 @@ def create_truth_table():
         try:
             t = TruthTable(data['expression'])
             return Response(json.dumps({'image': t.tree.get_graph_image_name(),
-                                        'table': t.table.tolist(),
+                                        'table': t.table,
                                         'identification': t.identification}), 200)
         except ParserError as e:
             return Response(json.dumps({'error': e.message}), 200)

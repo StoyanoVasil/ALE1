@@ -28,10 +28,12 @@ class Simplifier:
     def simplify(self):
         self.__reduce_implicants()
         self.__populate_final_implicants()
+        return self.__generate_table()
 
 
     def __reduce_implicants(self):
         self.__step()
+        self.keys.clear()
         while self.__not_done():
             self.implicants = self.step.copy()
             self.step = {}
@@ -102,12 +104,7 @@ class Simplifier:
     def __add_reduced_implicants(self):
         for k, v in self.implicants.items():
             for arr in v:
-                if not(arr[2]): self.__add_if_not_inside((arr[0], arr[1]))
-
-    def __add_if_not_inside(self, tuple):
-        for x, y in self.reduced_implicants:
-            if y == tuple[1]: return
-        self.reduced_implicants.append(tuple)
+                if not(arr[2]): self.reduced_implicants.append((arr[0], arr[1]))
 
     def __add_essential_prime_implicants(self):
         self.__add_unique_minterm_implicants()
@@ -174,6 +171,14 @@ class Simplifier:
 
     def __normalize(self):
         self.normalization = ' ⋁ '.join(self.normalization)
+
+    def __generate_table(self):
+        temp = []
+        for tpl in self.final_implicants:
+            row = tpl[1] + '1'
+            temp.append([i for i in row])
+        return temp
+
 
 
 if __name__ == '__main__':

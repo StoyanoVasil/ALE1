@@ -7,6 +7,7 @@ NODES = {
     '>': ImplicationOperator,
     '=': BiImplicationOperator,
     '&': AndOperator,
+    '%': NandOperator,
     '|': OrOperator
 }
 

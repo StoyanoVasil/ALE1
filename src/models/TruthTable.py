@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 from src.models.Tree import Tree
 from src.models.Simplifier import Simplifier
 
@@ -9,9 +9,12 @@ class TruthTable:
         self.__set_rows_and_columns()
         self.simplifier = Simplifier(self.predicates)
         self.normalization = []
+        self.simplified_table = []
         self.__create_table()
-        self.simplifier.simplify()
         self.__normalize()
+
+    def simplify(self):
+        self.__create_simplified_table()
 
     def __set_rows_and_columns(self):
         self.predicates = self.tree.unique_predicates
@@ -26,10 +29,11 @@ class TruthTable:
 
     def __create_table_no_predicates(self):
         self.identification = self.tree.evaluate({})
-        self.table = np.array([[self.tree.get_infix_expression()], [self.identification]])
+        # TODO: displays unnecessary stuff
+        self.table = [self.tree.get_infix_expression(), self.identification]
 
     def __create_table_predicates(self):
-        self.table = np.array([arr for arr in self.__table_row_generator()])
+        self.table = [arr for arr in self.__table_row_generator()]
         self.__set_identification()
         self.__add_predicates_to_table()
 
@@ -43,6 +47,8 @@ class TruthTable:
         if evaluation == 1:
             self.__add_to_normalization(values_array)
             self.simplifier.add_implicant(i, values_array)
+        else:
+            self.simplified_table.append(values_array)
         values_array.append(evaluation)
         return values_array
 
@@ -59,7 +65,7 @@ class TruthTable:
     def __add_predicates_to_table(self):
         predicates = [x for x in self.tree.unique_predicates]
         predicates.append(self.tree.get_infix_expression())
-        self.table = np.vstack((np.array(predicates), self.table))
+        self.table = [predicates] + self.table
 
     def __add_to_normalization(self, values):
         dict = self.__create_dict(values)
@@ -72,9 +78,15 @@ class TruthTable:
 
     def __normalize(self):
         self.normalization = ' ⋁ '.join(self.normalization)
+        self.simplified_normalization = self.simplifier.normalization
+
+    def __create_simplified_table(self):
+        self.simplified_table = [self.table[0]] + self.simplifier.simplify() + self.simplified_table
 
 
 if __name__ == '__main__':
     # t = TruthTable('&(A,|(C,B))')
-    t = TruthTable('&(|(A,B),>(C,~(&(|(D,E),|(F,G)))))')
-    print(t.simplifier.final_implicants)
+    t = TruthTable('=(=(A,B),=(C,D))')
+    t1 = TruthTable(str(t.tree.nandify()))
+    print(t.identification)
+    print(t1.identification)

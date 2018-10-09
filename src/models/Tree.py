@@ -10,7 +10,7 @@ class Tree:
         self.__set_unique_predicates()
 
     def get_infix_expression(self):
-        return str(self.root)
+        return self.root
 
     def get_graph_image_name(self):
         self.__create_graph_image()
@@ -36,3 +36,6 @@ class Tree:
 
     def evaluate(self, dict):
         return self.root.evaluate(dict)
+
+    def nandify(self):
+        return self.root.nandify()
