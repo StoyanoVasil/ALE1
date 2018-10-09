@@ -15,6 +15,7 @@ def create_truth_table():
         data = request.json
         try:
             t = TruthTable(data['expression'])
+            print(t.table)
             return Response(json.dumps({'image': t.tree.get_graph_image_name(),
                                         'table': t.table,
                                         'identification': t.identification,

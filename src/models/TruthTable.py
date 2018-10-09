@@ -23,7 +23,7 @@ class TruthTable:
         self.columns = len(self.predicates) + 1
 
     def __create_table(self):
-        if self.predicates == 0:
+        if len(self.predicates) == 0:
             self.__create_table_no_predicates()
         else:
             self.__create_table_predicates()
@@ -31,7 +31,7 @@ class TruthTable:
     def __create_table_no_predicates(self):
         self.identification = self.tree.evaluate({})
         # TODO: displays unnecessary stuff
-        self.table = [self.tree.get_infix_expression(), self.identification]
+        self.table = [[self.tree.get_infix_expression()], [self.identification]]
 
     def __create_table_predicates(self):
         self.table = [arr for arr in self.__table_row_generator()]
@@ -78,7 +78,8 @@ class TruthTable:
         self.normalization.append(f'{norm}')
 
     def __normalize(self):
-        self.normalization = reduce(lambda x, y: f'|({x},{y})',self.normalization)
+        if len(self.normalization) > 0:
+            self.normalization = reduce(lambda x, y: f'|({x},{y})',self.normalization)
 
     def __create_simplified_table(self):
         self.simplified_table = [self.table[0]] + self.simplifier.simplify() + self.simplified_table
