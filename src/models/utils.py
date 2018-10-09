@@ -70,12 +70,12 @@ def _is_proper_predicate(char):
     print(char)
     if _predicate_is_capital_letter(char) or str(char) in ['0', '1']:
         return True
-    return False
+    raise PredicateError('Predicates must be a letter, 0 or 1')
 
 def _predicate_is_capital_letter(char):
     letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    if char in letters: return True
-    raise PredicateError('Predicates must be a capital letter, 0 or 1')
+    if char.capitalize() in letters: return True
+    return False
 
 def _operators_are_followed_by_bracket(expression):
     try:
