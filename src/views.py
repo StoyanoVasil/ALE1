@@ -1,4 +1,4 @@
-from flask import render_template, request, Response, json
+from flask import render_template, request, Response, json, session
 from src import app
 from src.models.TruthTable import *
 from src.models.Errors import ParserError
@@ -18,6 +18,19 @@ def create_truth_table():
                                         'table': t.table,
                                         'identification': t.identification,
                                         'normalization': t.normalization}), 200)
+        except ParserError as e:
+            return Response(json.dumps({'error': e.message}), 200)
+
+@app.route('/simplify', methods=['POST'])
+def simplify():
+    if request.method == 'POST':
+        data = request.json
+        try:
+            t = TruthTable(data['expression'])
+            t.simplify()
+            return Response(json.dumps({'table': t.simplified_table,
+                                        'identification': t.simplified_identification,
+                                        'normalization': t.simplified_normalization}), 200)
         except ParserError as e:
             return Response(json.dumps({'error': e.message}), 200)
 

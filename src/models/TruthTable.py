@@ -82,6 +82,8 @@ class TruthTable:
 
     def __create_simplified_table(self):
         self.simplified_table = [self.table[0]] + self.simplifier.simplify() + self.simplified_table
+        bin = ''.join(reversed([str(i[-1]) for i in self.simplified_table[1:]]))
+        self.simplified_identification = hex(int(bin, 2))[2:]
 
 
 if __name__ == '__main__':
