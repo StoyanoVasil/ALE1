@@ -17,6 +17,7 @@ document.getElementById("generate").addEventListener("click", function () {
 truth_table_request.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200){
         var json = JSON.parse(this.responseText);
+        console.log(json);
         var error = json['error'];
         if(error) {
             alert(json["error"]);
@@ -28,10 +29,7 @@ truth_table_request.onreadystatechange = function() {
             } else { b = false; }
             rendered_truth_table.open("POST", "/render_table", true);
             rendered_truth_table.setRequestHeader("Content-Type", "application/json");
-            rendered_truth_table.send(JSON.stringify({
-                "table": json["table"],
-                "identification": json["identification"],
-                "normalization": json["normalization"]}));
+            rendered_truth_table.send(this.responseText);
         }
     }
 };
