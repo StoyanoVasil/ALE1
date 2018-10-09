@@ -1,4 +1,4 @@
-# import numpy as np
+from functools import reduce
 from src.models.Tree import Tree
 from src.models.Simplifier import Simplifier
 
@@ -15,6 +15,7 @@ class TruthTable:
 
     def simplify(self):
         self.__create_simplified_table()
+        self.simplified_normalization = self.simplifier.normalization
 
     def __set_rows_and_columns(self):
         self.predicates = self.tree.unique_predicates
@@ -72,13 +73,12 @@ class TruthTable:
         predicates = []
         for k, v in dict.items():
             if v == 1: predicates.append(f'{k}')
-            else: predicates.append(f'¬{k}')
-        norm = ' ⋀ '.join(predicates)
-        self.normalization.append(f'({norm})')
+            else: predicates.append(f'~({k})')
+        norm = reduce(lambda x, y: f'&({x},{y})', predicates)
+        self.normalization.append(f'{norm}')
 
     def __normalize(self):
-        self.normalization = ' ⋁ '.join(self.normalization)
-        self.simplified_normalization = self.simplifier.normalization
+        self.normalization = reduce(lambda x, y: f'|({x},{y})',self.normalization)
 
     def __create_simplified_table(self):
         self.simplified_table = [self.table[0]] + self.simplifier.simplify() + self.simplified_table
@@ -87,7 +87,9 @@ class TruthTable:
 if __name__ == '__main__':
     t = TruthTable('>(|(~(A),~(&(J,B))),=(C,|(D,F)))')
     t1 = TruthTable(str(t.tree.nandify()))
-    print(t.identification)
     print(t.tree.get_infix_expression())
-    print(t1.identification)
-    print(t1.tree.get_infix_expression())
+    print(t.normalization)
+    t.simplify()
+    print(t.simplified_normalization)
+    # print(t1.normalization)
+    # print(t1.tree.get_infix_expression())

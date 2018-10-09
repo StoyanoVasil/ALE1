@@ -1,3 +1,5 @@
+from functools import reduce
+
 
 class Simplifier:
     def __init__(self, predicates):
@@ -165,12 +167,12 @@ class Simplifier:
         predicates = []
         for i, t in enumerate(tuple[1]):
             if t == '1': predicates.append(f'{self.predicates[i]}')
-            elif t == '0': predicates.append(f'¬{self.predicates[i]}')
-        norm = ' ⋀ '.join(predicates)
-        self.normalization.append(f'({norm})')
+            elif t == '0': predicates.append(f'~({self.predicates[i]})')
+        norm = reduce(lambda x, y: f'&({x},{y})', predicates)
+        self.normalization.append(f'{norm}')
 
     def __normalize(self):
-        self.normalization = ' ⋁ '.join(self.normalization)
+        self.normalization = reduce(lambda x, y: f'|({x},{y})', self.normalization)
 
     def __generate_table(self):
         temp = []
