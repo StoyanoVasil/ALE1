@@ -28,9 +28,11 @@ class Simplifier:
         return ones
 
     def simplify(self):
-        self.__reduce_implicants()
-        self.__populate_final_implicants()
-        return self.__generate_table()
+        if self.implicants != {}:
+            self.__reduce_implicants()
+            self.__populate_final_implicants()
+            return self.__generate_table()
+        return None
 
 
     def __reduce_implicants(self):

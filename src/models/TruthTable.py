@@ -30,7 +30,7 @@ class TruthTable:
 
     def __create_table_no_predicates(self):
         self.identification = self.tree.evaluate({})
-        # TODO: displays unnecessary stuff
+        self.normalization = ''
         self.table = [[self.tree.get_infix_expression()], [self.identification]]
 
     def __create_table_predicates(self):
@@ -82,9 +82,13 @@ class TruthTable:
             self.normalization = reduce(lambda x, y: f'|({x},{y})',self.normalization)
 
     def __create_simplified_table(self):
-        self.simplified_table = [self.table[0]] + self.simplifier.simplify() + self.simplified_table
-        bin = ''.join(reversed([str(i[-1]) for i in self.simplified_table[1:]]))
-        self.simplified_identification = hex(int(bin, 2))[2:]
+        sim = self.simplifier.simplify()
+        if sim:
+            self.simplified_table = [self.table[0]] +  + self.simplified_table
+            bin = ''.join(reversed([str(i[-1]) for i in self.simplified_table[1:]]))
+            self.simplified_identification = hex(int(bin, 2))[2:]
+        else:
+            self.simplified_identification = ''
 
 
 if __name__ == '__main__':
