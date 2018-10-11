@@ -24,7 +24,7 @@ class TestUnaryOperator(unittest.TestCase):
 
         # with empty list
         list = []
-        self.child.get_predicates(list)
+        self.unary.get_predicates(list)
         self.assertEqual(list, ['A'])
 
         # with non-empty list

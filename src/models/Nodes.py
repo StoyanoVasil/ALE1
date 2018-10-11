@@ -171,5 +171,4 @@ class NandOperator(BinaryOperator):
         return 1 if not(self.left_child.evaluate(dict) and self.right_child.evaluate(dict)) else 0
 
     def nandify(self):
-        # return self
         return NandOperator(self.label, self.left_child, self.right_child)
