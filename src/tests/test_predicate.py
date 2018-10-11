@@ -58,7 +58,3 @@ class TestPredicate(unittest.TestCase):
         self.assertIsInstance(number_nand, Predicate)
         self.assertEqual(number_nand.label, '1')
         self.assertEqual(number_nand.evaluate({}), self.predicate_with_number.evaluate({}))
-
-
-if __name__ == '__main__':
-    unittest.main()

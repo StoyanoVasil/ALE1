@@ -30,7 +30,3 @@ class TestTree(unittest.TestCase):
         self.assertEqual(tree_nand.evaluate({'A': 1, 'B': 0}), self.tree.evaluate({'A': 1, 'B': 0}))
         self.assertEqual(tree_nand.evaluate({'A': 0, 'B': 1}), self.tree.evaluate({'A': 0, 'B': 1}))
         self.assertEqual(tree_nand.evaluate({'A': 0, 'B': 0}), self.tree.evaluate({'A': 0, 'B': 0}))
-
-
-if __name__ == '__main__':
-    unittest.main()

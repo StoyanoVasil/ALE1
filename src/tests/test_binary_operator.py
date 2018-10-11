@@ -33,7 +33,3 @@ class TestBinaryOperator(unittest.TestCase):
         self.l_child.label = 'B'
         self.binary.get_predicates(list)
         self.assertEqual(list, ['A', 'B', 'B', 'A'])
-
-
-if __name__ == '__main__':
-    unittest.main()

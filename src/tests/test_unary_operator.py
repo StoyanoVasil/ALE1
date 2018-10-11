@@ -53,7 +53,3 @@ class TestUnaryOperator(unittest.TestCase):
         self.assertIsInstance(unary_nand, NandOperator)
         self.assertEqual(unary_nand.label, '%')
         self.assertEqual(unary_nand.evaluate({}), self.unary.evaluate({}))
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -44,7 +44,3 @@ class TestBiImplicationOperator(unittest.TestCase):
         self.assertEqual(and_nand.evaluate({'A': 1, 'B': 0}), self.binary.evaluate({'A': 1, 'B': 0}))
         self.assertEqual(and_nand.evaluate({'A': 0, 'B': 1}), self.binary.evaluate({'A': 0, 'B': 1}))
         self.assertEqual(and_nand.evaluate({'A': 0, 'B': 0}), self.binary.evaluate({'A': 0, 'B': 0}))
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -3,7 +3,7 @@
 ## Description
 This is a simple web app using Python and Flask that implements the functionality and requirements of the ALE1 subject
 
-## How to run the application
+## Run the application
 
 ### First install:
 1. Python (Version 3.6 was used for development)
@@ -16,3 +16,8 @@ This is a simple web app using Python and Flask that implements the functionalit
 
 Finally go to http://localhost:5000/. Make 
 sure you are connected to the Internet for the Bootstrap CDN to work.
+
+## Run the tests
+
+1. Open a terminal in the root directory of the project
+2. Run `python -m unittest discover src/tests`

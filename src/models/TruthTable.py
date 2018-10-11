@@ -90,13 +90,3 @@ class TruthTable:
         else:
             self.simplified_identification = ''
             self.simplified_table = []
-
-
-# TODO: remove this shid
-if __name__ == '__main__':
-    expressions = ['&(A,B)', '|(A,B)', '=(A,B)', '>(A,B)', '~(A)', '1', 'A']
-    temp = []
-    for e in expressions:
-        t = TruthTable(e)
-        temp.append(t.normalization)
-    print(temp)

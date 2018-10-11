@@ -182,24 +182,3 @@ class Simplifier:
             row = tpl[1] + '1'
             temp.append([i for i in row])
         return temp
-
-
-
-# TODO: remove this shid
-if __name__ == '__main__':
-    arr = {
-        '0': [0, 0, 0, 0],
-        '4': [0, 1, 0, 0],
-        '5': [0, 1, 0, 1],
-        '7': [0, 1, 1, 1],
-        '8': [1, 0 ,0 ,0],
-        '11': [1, 0, 1, 1],
-        '12': [1, 1, 0, 0],
-        '15': [1, 1, 1, 1]
-    }
-    s = Simplifier(['A', 'B', 'C', 'D'])
-    for k, v in arr.items():
-        s.add_implicant(k, v)
-    s.simplify()
-    print(s.final_implicants)
-    print(s.normalization)

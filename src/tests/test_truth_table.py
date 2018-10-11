@@ -32,7 +32,3 @@ class TestTruthTabel(unittest.TestCase):
         table.simplifier.simplify = MagicMock(return_value=[[0, 1], [1, 0]])
         table.simplify()
         self.assertEqual(table.simplified_table[1:3], [[0, 1], [1, 0]])
-
-
-if __name__ == '__main__':
-    unittest.main()
