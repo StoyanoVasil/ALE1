@@ -5,7 +5,7 @@ class Simplifier:
     def __init__(self, predicates):
         self.keys = set()
         self.predicates = predicates
-        self.minterm = []
+        self.minterms = []
         self.implicants = {}
         self.step = {}
         self.reduced_implicants = []
@@ -19,7 +19,7 @@ class Simplifier:
             self.implicants[ones] = [[i, mt[:], False]]
         else:
             self.implicants[ones].append([i, mt[:], False])
-        self.minterm.append(i)
+        self.minterms.append(i)
 
     def __get_number_of_ones(self, imp):
         ones = 0
@@ -185,6 +185,7 @@ class Simplifier:
 
 
 
+# TODO: remove this shid
 if __name__ == '__main__':
     arr = {
         '0': [0, 0, 0, 0],

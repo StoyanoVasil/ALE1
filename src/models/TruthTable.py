@@ -91,6 +91,7 @@ class TruthTable:
             self.simplified_identification = ''
 
 
+# TODO: remove this shid
 if __name__ == '__main__':
     t = TruthTable('>(|(~(A),~(&(J,B))),=(C,|(D,F)))')
     t1 = TruthTable(str(t.tree.nandify()))

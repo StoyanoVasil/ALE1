@@ -37,9 +37,6 @@ class Predicate(Node):
         if self.label in dict: return dict[self.label]
         return int(self.label)
 
-    def __true_of_false(self, num):
-        return True if int(num) == 1 else False
-
     def nandify(self):
         return Predicate(self.label)
 

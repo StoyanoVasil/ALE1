@@ -67,7 +67,6 @@ def _expression_is_single_predicate(expression):
         else: raise PredicateError('Not a proper predicate')
 
 def _is_proper_predicate(char):
-    print(char)
     if _predicate_is_capital_letter(char) or str(char) in ['0', '1']:
         return True
     raise PredicateError('Predicates must be a letter, 0 or 1')
