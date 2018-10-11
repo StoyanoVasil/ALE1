@@ -89,15 +89,14 @@ class TruthTable:
             self.simplified_identification = hex(int(bin, 2))[2:]
         else:
             self.simplified_identification = ''
+            self.simplified_table = []
 
 
 # TODO: remove this shid
 if __name__ == '__main__':
-    t = TruthTable('>(|(~(A),~(&(J,B))),=(C,|(D,F)))')
-    t1 = TruthTable(str(t.tree.nandify()))
-    print(t.tree.get_infix_expression())
-    print(t.normalization)
-    t.simplify()
-    print(t.simplified_normalization)
-    # print(t1.normalization)
-    # print(t1.tree.get_infix_expression())
+    expressions = ['&(A,B)', '|(A,B)', '=(A,B)', '>(A,B)', '~(A)', '1', 'A']
+    temp = []
+    for e in expressions:
+        t = TruthTable(e)
+        temp.append(t.normalization)
+    print(temp)
