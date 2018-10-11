@@ -12,7 +12,7 @@ class TestNandOperator(unittest.TestCase):
         self.binary = NandOperator('%', self.l_child, self.r_child)
 
     def test_evaluate(self):
-        print('test_and_evaluate')
+        print('test_nand_evaluate')
 
         # children returns 1 and 1
         self.l_child.evaluate = MagicMock(return_value=1)
@@ -35,7 +35,7 @@ class TestNandOperator(unittest.TestCase):
         self.assertEqual(self.binary.evaluate({}), True)
 
     def test_nandify(self):
-        print('test_and_nandify')
+        print('test_nand_nandify')
         and_nand = self.binary.nandify()
 
         self.assertIsInstance(and_nand, NandOperator)
