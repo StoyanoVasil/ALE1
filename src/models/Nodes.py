@@ -87,8 +87,8 @@ class BinaryOperator(Node):
         dot.edge(self.id, self.right_child.id)
 
     def get_predicates(self, list):
-        self.right_child.get_predicates(list)
         self.left_child.get_predicates(list)
+        self.right_child.get_predicates(list)
 
     def evaluate(self, dict):
         raise NotImplementedError
