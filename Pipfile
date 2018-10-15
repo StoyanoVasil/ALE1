@@ -8,6 +8,7 @@ flask = "*"
 graphviz = "*"
 pydot = "*"
 numpy = "*"
+coverage = "*"
 
 [dev-packages]
 
